@@ -8,10 +8,10 @@
   border-radius: 5px;
 }
 .booking-details {
-  float: right;
-  position: relative;
-  width: 200px;
-  height: 450px;
+  position:fixed;
+  top:15px;
+  right:20px;
+  height: 30px;
 }
 .booking-details h3 {
   margin: 5px 5px 0 0;
@@ -28,13 +28,17 @@
 div.seatCharts-cell {
   color: #182C4E;
   height: 25px;
-  width: 25px;
+  width: 50px;
   line-height: 25px;
   margin: 3px;
   float: left;
   text-align: center;
   outline: none;
   font-size: 13px;
+}
+div.Area_B  div.seatCharts-cell{
+  height: 50px;
+  width: 25px;
 }
 div.seatCharts-seat {
   color: #fff;
@@ -45,6 +49,9 @@ div.seatCharts-seat {
 }
 div.seatCharts-row {
   height: 35px;
+}
+div.Area_B div.seatCharts-row {
+  height: 60px;
 }
 div.seatCharts-seat.available {
   background-color: #B9DEA0;
@@ -61,7 +68,7 @@ div.seatCharts-seat.unavailable {
   cursor: not-allowed;
 }
 div.seatCharts-container {
-  border-right: 1px dotted #adadad;
+  /*border-right: 1px dotted #adadad;*/
   width: 600px;
   padding: 20px;
   float: left;
