@@ -7,24 +7,24 @@
   padding: 3px;
   border-radius: 5px;
 }
-.booking-details {
-  position:fixed;
-  top:15px;
-  right:200px;
-  height: 30px;
+.booking-details table{
+  text-align: center;
+  color:#666;
+  position:relative;
+  width:80%;
 }
-.booking-details h3 {
+/*.booking-details h3 {
   margin: 5px 5px 0 0;
   font-size: 16px;
 }
-.booking-details p {
+.booking-details td th{
   line-height: 26px;
   font-size: 16px;
   color: #999
 }
-.booking-details p span {
+.booking-details td span {
   color: #666
-}
+}*/
 div.seatCharts-cell {
   color: #182C4E;
   height: 25px;
@@ -101,13 +101,13 @@ span.seatCharts-legendDescription {
   font-size: 14px;
   cursor: pointer
 }
-#selected-seats {
+/*#selected-seats {
   max-height: 150px;
   overflow-y: auto;
   overflow-x: none;
   width: 200px;
-}
-#selected-seats li {
+}*/
+/*#selected-seats li {
   float: left;
   width: 72px;
   height: 26px;
@@ -118,4 +118,4 @@ span.seatCharts-legendDescription {
   font-size: 14px;
   font-weight: bold;
   text-align: center
-}
+}*/
