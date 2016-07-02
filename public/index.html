@@ -6,6 +6,7 @@
   <link href="src/style.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="src/jquery.js"></script>
   <script type="text/javascript" src="src/jquery.seat-charts.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
   <script type="text/javascript" src="src/controller.js"></script>
 </head>
 
@@ -13,11 +14,11 @@
   <div class="booking-details">
     <p>Seat: <ul id="selected-seats"></ul></p>
     <p>For: <ul id="hover-seat"></ul></p>
+    <p>Update: <ul id="updateInfo"></ul></p>
   </div>
   <div class="Area_A">
     <div id="seat-mapA">
       <div class="front">Area A</div>
-
     </div>
   </div>
   <div class="Area_B">
@@ -29,7 +30,6 @@
   <div class="Area_C">
     <div id="seat-mapC">
       <div class="front">Terrace</div>
-
     </div>
   </div>
 

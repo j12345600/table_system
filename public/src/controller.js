@@ -87,12 +87,23 @@ $(document).ready(function() {
         //
         // $counter.text(sc.find('selected').length + 1);
          $seats.text(recalculateTotal(scA)-1);
-
+         scA.get(this.settings.id).status('selected');
+         socket.emit('recv_updateA', {status:{
+           unavailable:scA.find('unavailable').seatIds,
+           available:scA.find('available').seatIds,
+           selected:scA.find('selected').seatIds
+         }});
         return 'selected';
       } else if (this.status() == 'selected') { //Checked
         // //Update Number
         // $counter.text(sc.find('selected').length - 1);
         // //update totalnum
+        scA.get(this.settings.id).status('available');
+        socket.emit('recv_updateA', {status:{
+          unavailable:scA.find('unavailable').seatIds,
+          available:scA.find('available').seatIds,
+          selected:scA.find('selected').seatIds
+        }});
         $seats.text(recalculateTotal(scA)+1);
         //
         // //Delete reservation
@@ -222,12 +233,30 @@ $(document).ready(function() {
       }
     }
   });
-
+  var socket = io();
+  socket.emit('new_connt', { time: new Date()});
+  socket.on('updateA', function(status){
+      // $('#updateInfo').text(msg.status);
+      updateStatus(scA,status);
+    });
+  socket.on('updateB', function(status){
+      // $('#updateInfo').text(msg.status);
+      updateStatus(scB,status);
+    });
+  socket.on('updateC', function(status){
+      // $('#updateInfo').text(msg.status);
+      updateStatus(scC,status);
+    });
   //sold seat
   //sc.get(['1_2', '4_4', '4_5', '6_6', '6_7', '8_5', '8_6', '8_7', '8_8', '10_1', '10_2']).status('unavailable');
-
 });
-
+function updateStatus(sc,status){
+  if(status!=undefined){
+    sc.get(status.status.unavailable).status('unavailable');
+    sc.get(status.status.available).status('available');
+    sc.get(status.status.selected).status('selected');
+  }
+}
 //sum total money
 function recalculateTotal(sc) {
   var total = 0;
