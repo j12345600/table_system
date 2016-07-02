@@ -5,6 +5,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var condA,condB,condC;
+var numOnline=0;
 // var mongojs = require('mongojs');
 // var db = mongojs('contactlist', ['contactlist']);
 //var bodyParser = require('body-parser');
@@ -14,7 +15,11 @@ app.get('/hello',function(req, res){
 	var dateObj=new Date;
 	res.json(dateObj);
 });
+
 io.on('connection', function(socket){
+	socket.on('disconnect',function(socket){
+		io.emit('updateOnline',io.engine.clientsCount);
+	});
 	socket.on("recv_updateA", function(msg){
     io.emit('updateA',msg);
 		condA=msg;
@@ -28,9 +33,11 @@ io.on('connection', function(socket){
 		condC=msg;
   });
 	socket.on('new_connt',function(msg){
+		numOnline++;
 		socket.emit('updateA',condA);
 		socket.emit('updateB',condB);
 		socket.emit('updateC',condC);
+		io.emit('updateOnline',io.engine.clientsCount);
 	});
 	socket.on('reset',function(msg){
 		condA={};
