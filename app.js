@@ -28,7 +28,9 @@ app.use(session({
 		maxAge: 24*60*60*1000,
     httpOnly: true,
 		//domain: 'table.mgr.ddns.net'
-	 }
+	},
+ resave: true,
+ saveUninitialized: true
 }));
 app.post('/api/login', function (req, res,next) {
   if(loginData[req.body.account]===req.body.passwd){
