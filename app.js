@@ -8,6 +8,7 @@ var helmet = require('helmet');
 var session = require('express-session');
 var bodyParser=require('body-parser');
 var fs = require('fs');
+var secret=require('./secret.js')
 var condA,condB,condC;
 var numOnline=0;
 var loginData={
@@ -22,7 +23,7 @@ app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
-  secret: 'BuX2xHfzQZBs2R', // 建議使用 128 個字符的隨機字符串
+  secret: secret.sessionSecret,
   cookie: {
 		maxAge: 24*60*60*1000,
     httpOnly: true,
@@ -30,7 +31,6 @@ app.use(session({
 	 }
 }));
 app.post('/api/login', function (req, res,next) {
-	console.log(req.body);
   if(loginData[req.body.account]===req.body.passwd){
 		req.session.account=req.body.account;
 		req.session.hasLogin=1;
