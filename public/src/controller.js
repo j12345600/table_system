@@ -47,7 +47,9 @@ var mapCpp=[
   [8,8,8,8]
 ];
 $(document).ready(function() {
-  var $seats = $('#selected-seats'); //Sitting Area
+  var $seats = [$('#selected-seats_A'),$('#selected-seats_B'),$('#selected-seats_C')]; //Sitting Area
+  var $hover=[$('#hover-seat_A'),$('#hover-seat_B'),$('#hover-seat_C')];
+  var $online=$('#numOnline');
   var scA = $('#seat-mapA').seatCharts({
     map: mapA,
     naming: {
@@ -66,15 +68,15 @@ $(document).ready(function() {
     focus  : function() {
 
     if (this.status() == 'available') {
-        $('#hover-seat').text(mapApp[this.settings.row ][this.settings.column]);
+        $hover[0].text(mapApp[this.settings.row ][this.settings.column]);
 
         return 'focused';
     }else if (this.status() == 'selected') { //sold
-      $('#hover-seat').text(mapCpp[this.settings.row ][this.settings.column]);
+      $hover[0].text(mapCpp[this.settings.row ][this.settings.column]);
       return this.style();
     } else  {
         //otherwise nothing changes
-        $('#hover-seat').text("");
+        $hover[0].text("");
         return this.style();
     }
     },
@@ -86,7 +88,7 @@ $(document).ready(function() {
         //   .appendTo($cart);
         //
         // $counter.text(sc.find('selected').length + 1);
-         $seats.text(recalculateTotal(scA)-1);
+         $seats[0].text(recalculateTotal(scA)-1);
          scA.get(this.settings.id).status('selected');
          socket.emit('recv_updateA', {status:{
            unavailable:scA.find('unavailable').seatIds,
@@ -104,7 +106,7 @@ $(document).ready(function() {
           available:scA.find('available').seatIds,
           selected:scA.find('selected').seatIds
         }});
-        $seats.text(recalculateTotal(scA)+1);
+        $seats[0].text(recalculateTotal(scA)+1);
         //
         // //Delete reservation
         // $('#cart-item-' + this.settings.id).remove();
@@ -136,14 +138,14 @@ $(document).ready(function() {
     focus  : function() {
 
     if (this.status() == 'available') {
-        $('#hover-seat').text(mapBpp[this.settings.row ][this.settings.column]);
+        $hover[1].text(mapBpp[this.settings.row ][this.settings.column]);
         return 'focused';
     } else if (this.status() == 'selected') { //sold
-      $('#hover-seat').text(mapCpp[this.settings.row ][this.settings.column]);
+      $hover[1].text(mapCpp[this.settings.row ][this.settings.column]);
       return this.style();
     }else  {
         //otherwise nothing changes
-        $('#hover-seat').text("");
+        $hover[1].text("");
         return this.style();
     }
     },
@@ -155,14 +157,14 @@ $(document).ready(function() {
         //   .appendTo($cart);
         //
         // $counter.text(sc.find('selected').length + 1);
-         $seats.text(recalculateTotal(scB)-1);
+         $seats[1].text(recalculateTotal(scB)-1);
 
         return 'selected';
       } else if (this.status() == 'selected') { //Checked
         // //Update Number
         // $counter.text(sc.find('selected').length - 1);
         // //update totalnum
-        $seats.text(recalculateTotal(scB)+1);
+        $seats[1].text(recalculateTotal(scB)+1);
         //
         // //Delete reservation
         // $('#cart-item-' + this.settings.id).remove();
@@ -194,14 +196,14 @@ $(document).ready(function() {
     focus  : function() {
 
     if (this.status() == 'available') {
-        $('#hover-seat').text(mapCpp[this.settings.row ][this.settings.column]);
+        $hover[2].text(mapCpp[this.settings.row ][this.settings.column]);
         return 'focused';
     } else if (this.status() == 'selected') { //sold
-      $('#hover-seat').text(mapCpp[this.settings.row ][this.settings.column]);
+      $hover[2].text(mapCpp[this.settings.row ][this.settings.column]);
       return this.style();
     }else  {
         //otherwise nothing changes
-        $('#hover-seat').text("");
+        $hover[2].text("");
         return this.style();
     }
     },
@@ -213,14 +215,14 @@ $(document).ready(function() {
         //   .appendTo($cart);
         //
         // $counter.text(sc.find('selected').length + 1);
-         $seats.text(recalculateTotal(scC)-1);
+         $seats[2].text(recalculateTotal(scC)-1);
 
         return 'selected';
       } else if (this.status() == 'selected') { //Checked
         // //Update Number
         // $counter.text(sc.find('selected').length - 1);
         // //update totalnum
-        $seats.text(recalculateTotal(scC)+1);
+        $seats[2].text(recalculateTotal(scC)+1);
         //
         // //Delete reservation
         // $('#cart-item-' + this.settings.id).remove();
@@ -248,7 +250,7 @@ $(document).ready(function() {
       updateStatus(scC,status);
     });
   socket.on('updateOnline',function(number){
-    $('#numOnline').text(number);
+    $online.text(number);
     });
   //sold seat
   //sc.get(['1_2', '4_4', '4_5', '6_6', '6_7', '8_5', '8_6', '8_7', '8_8', '10_1', '10_2']).status('unavailable');
