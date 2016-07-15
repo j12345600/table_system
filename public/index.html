@@ -21,14 +21,20 @@
 </head>
 
 <body>
-  <div id="login-form" title="Login">
+  <div id="login-form" title="Login" style="visibility:hidden">
     <p id="validateTips">All form fields are required.</p>
   <form>
     <fieldset>
-      <label for="account">Account</label>
-      <input type="text" name="account" id="account" class="text ui-widget-content ui-corner-all">
-      <label for="passwd">Password</label>
-      <input type="password" name="passwd" id="passwd" class="text ui-widget-content ui-corner-all">
+      <table>
+      <tr>
+        <td><label for="account">帳號:</label></td>
+        <td><input type="text" name="account" id="account" class="text ui-widget-content ui-corner-all"></td>
+      </tr>
+      <tr>
+        <td><label for="passwd">密碼:</label></td>
+        <td> <input type="password" name="passwd" id="passwd" class="text ui-widget-content ui-corner-all"></td>
+      </tr>
+      </table>
       <!-- Allow form submission with keyboard without duplicating the dialog button -->
       <!-- <input type="submit" tabindex="-1" style="position:absolute; top:-1000px"> -->
     </fieldset>

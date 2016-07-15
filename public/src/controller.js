@@ -237,26 +237,27 @@ $(document).ready(function() {
       }
     }
   });
-    dialog=$("#login-form").dialog({
-      autoOpen: false,
-      height: 400,
-      width: 350,
-      modal: true,
-      buttons: {
-        "Login": function() {
-          $.post('/api/login', {
-            account: $('#account').val(),
-            passwd: $('#passwd').val()
-          }).done(function (result) {
-            if(result.success!='false'){
-              connect_socket(result.token);
-              dialog.dialog("close");
-            }
-            else $("#validateTips").text("Wrong input");
-          });
-        }
+  $("#login-form").css("visibility","visible");
+  dialog=$("#login-form").dialog({
+    autoOpen: false,
+    height: 400,
+    width: 350,
+    modal: true,
+    buttons: {
+      "Login": function() {
+        $.post('/api/login', {
+          account: $('#account').val(),
+          passwd: $('#passwd').val()
+        }).done(function (result) {
+          if(result.success!='false'){
+            connect_socket(result.token);
+            dialog.dialog("close");
+          }
+          else $("#validateTips").text("Wrong input");
+        });
       }
-    });
+    }
+  });
   form = dialog.find( "form" ).on( "submit", function( event ) {
     event.preventDefault();
     $.post('/api/login', {
