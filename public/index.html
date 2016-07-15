@@ -14,11 +14,26 @@
 <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script> -->
   <style type="text/css"></style>
   <link href="src/style.css" rel="stylesheet" type="text/css" />
+  <link href="src/jquery-ui.min.css" rel="stylesheet" type="text/css" />
   <script src="/socket.io/socket.io.js"></script>
+  <script type="text/javascript" src="src/jquery-ui.min.js"></script>
   <script type="text/javascript" src="src/controller.js"></script>
 </head>
 
 <body>
+  <div id="login-form" title="Login">
+    <p id="validateTips">All form fields are required.</p>
+  <form>
+    <fieldset>
+      <label for="account">Account</label>
+      <input type="text" name="account" id="account" class="text ui-widget-content ui-corner-all">
+      <label for="passwd">Password</label>
+      <input type="password" name="passwd" id="passwd" class="text ui-widget-content ui-corner-all">
+      <!-- Allow form submission with keyboard without duplicating the dialog button -->
+      <!-- <input type="submit" tabindex="-1" style="position:absolute; top:-1000px"> -->
+    </fieldset>
+  </form>
+  </div>
   <div class="Area_A">
     <div id="seat-mapA">
       <div class="booking-details">

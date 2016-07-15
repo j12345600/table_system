@@ -2,6 +2,7 @@ var total_seatA = 1;
 var total_seatB = 1;
 var total_seatC = 1;
 var price = 1; //price
+var dialog;
 var mapA=[ //Seating chart
   'aa__aa_',
   'aaaaaaa',
@@ -50,6 +51,7 @@ $(document).ready(function() {
   var $seats = [$('#selected-seats_A'),$('#selected-seats_B'),$('#selected-seats_C')]; //Sitting Area
   var $hover=[$('#hover-seat_A'),$('#hover-seat_B'),$('#hover-seat_C')];
   var $online=$('#numOnline');
+  var socket
   var scA = $('#seat-mapA').seatCharts({
     map: mapA,
     naming: {
@@ -235,26 +237,72 @@ $(document).ready(function() {
       }
     }
   });
-  var socket = io();
-  socket.emit('new_connt', { time: new Date()});
-  socket.on('updateA', function(status){
-      // $('#updateInfo').text(msg.status);
-      updateStatus(scA,status);
+    dialog=$("#login-form").dialog({
+      autoOpen: false,
+      height: 400,
+      width: 350,
+      modal: true,
+      buttons: {
+        "Login": function() {
+          $.post('/api/login', {
+            account: $('#account').val(),
+            passwd: $('#passwd').val()
+          }).done(function (result) {
+            if(result.success!='false'){
+              connect_socket(result.token);
+              dialog.dialog("close");
+            }
+            else $("#validateTips").text("Wrong input");
+          });
+        }
+      }
     });
-  socket.on('updateB', function(status){
-      // $('#updateInfo').text(msg.status);
-      updateStatus(scB,status);
+  form = dialog.find( "form" ).on( "submit", function( event ) {
+    event.preventDefault();
+    $.post('/api/login', {
+      account: $('#account').val(),
+      passwd: $('#passwd').val()
+    }).done(function (result) {
+      if(result.success!='false'){
+        connect_socket(result.token);
+        dialog.dialog("close");
+      }
+
+      else $("#validateTips").text("Wrong input");
     });
-  socket.on('updateC', function(status){
-      // $('#updateInfo').text(msg.status);
-      updateStatus(scC,status);
+  });
+  $.post('/api/login',{account:""}).done(function (result) {
+    if(result.success=='false'){
+       dialog.dialog("open");
+    }
+    else connect_socket(result.token);
+  });
+  function connect_socket(token){
+    socket = io('', {
+      query: 'token=' + token
     });
-  socket.on('updateOnline',function(number){
-    $online.text(number);
-    });
+    socket.emit('new_connt', { time: new Date()});
+    socket.on('updateA', function(status){
+        // $('#updateInfo').text(msg.status);
+        updateStatus(scA,status);
+      });
+    socket.on('updateB', function(status){
+        // $('#updateInfo').text(msg.status);
+        updateStatus(scB,status);
+      });
+    socket.on('updateC', function(status){
+        // $('#updateInfo').text(msg.status);
+        updateStatus(scC,status);
+      });
+    socket.on('updateOnline',function(number){
+      $online.text(number);
+      });
+  }
   //sold seat
   //sc.get(['1_2', '4_4', '4_5', '6_6', '6_7', '8_5', '8_6', '8_7', '8_8', '10_1', '10_2']).status('unavailable');
 });
+
+
 function updateStatus(sc,status){
   if(status!=undefined){
     sc.get(status.status.unavailable).status('unavailable');
@@ -268,6 +316,5 @@ function recalculateTotal(sc) {
   sc.find('available').each(function() {
     total += price;
   });
-
   return total;
 }

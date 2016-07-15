@@ -9,6 +9,8 @@ var session = require('express-session');
 var bodyParser=require('body-parser');
 var fs = require('fs');
 var secret=require('./secret.js')
+var jwt = require('jsonwebtoken');
+var socketioJwt = require('socketio-jwt');
 var condA,condB,condC;
 var numOnline=0;
 var loginData={
@@ -26,52 +28,45 @@ app.use(session({
   secret: secret.sessionSecret,
   cookie: {
 		maxAge: 24*60*60*1000,
-    httpOnly: true,
+    httpOnly: true
 		//domain: 'table.mgr.ddns.net'
 	},
  resave: true,
  saveUninitialized: true
 }));
 app.post('/api/login', function (req, res,next) {
-  if(loginData[req.body.account]===req.body.passwd){
-		req.session.account=req.body.account;
-		req.session.hasLogin=1;
+	//console.log("receive request");
+	if(req.session.token){	//has logined, send token back
+			res.json({success:"true",token: req.session.token});
+	}
+	else if(req.body.account==undefined||req.body.passwd==undefined){
 		res.type("json");
-		res.json({success:"true"});
+		res.json({success:"false"});
+	}
+  else if(loginData[req.body.account]===req.body.passwd){	//login successfully
+		var profile = {
+	    account: req.body.account
+  	};
+  	var token = jwt.sign(profile, secret.sessionSecret, { expiresInMinutes: 60*5 });
+		req.session.token=token;
+		res.type("json");
+		res.json({success:"true",token:token});
 	}
 	else{
 		res.type("json");
 		res.json({success:"false"});
 	}
 });
-app.get('/jquery.js',function(req,res){
-	fs.readFile(__dirname + '/public/src/jquery.js', function(error, data) {
-		if (error){
-			res.send("opps this doesn't exist - 404");
-		} else {
-			res.set('Content-Type', 'text/javascript');
-			res.send(data);
-		}
-	});
-});
-app.use(function LoginAuth(req, res, next) {
-		if(!req.session.hasLogin) {
-			fs.readFile(__dirname + '/public/loginForm.html', function(error, data) {
-			if (error){
-				res.send("opps this doesn't exist - 404");
-			} else {
-				res.set('Content-Type', 'text/html');
-				res.send(data);
-			}
-		});
-	 } else {
-		 next();
-	 }
-});
 app.use(express.static(__dirname + '/public'));
 //app.use(bodyParser.json());
 
+io.set('authorization', socketioJwt.authorize({
+  secret: secret.sessionSecret,
+  handshake: true
+}));
 io.on('connection', function(socket){
+	//console.log(socket.handshake.decoded_token.account, 'connected');
+	console.log("sign in");
 	socket.on('disconnect',function(socket){
 		io.emit('updateOnline',io.engine.clientsCount);
 	});
