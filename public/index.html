@@ -3,22 +3,20 @@
 
 <head>
   <meta charset="UTF-8">
-  <script type="text/javascript" src="src/jquery.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script type="text/javascript" src="src/jquery.seat-charts.min.js"></script>
-  <!-- Latest compiled and minified CSS -->
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"> -->
+  <!-- bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
-<!-- Optional theme -->
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous"> -->
-
-<!-- Latest compiled and minified JavaScript -->
-<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script> -->
   <style type="text/css"></style>
   <link href="src/style.css" rel="stylesheet" type="text/css" />
   <link href="src/jquery-ui.min.css" rel="stylesheet" type="text/css" />
   <script src="/socket.io/socket.io.js"></script>
   <script type="text/javascript" src="src/jquery-ui.min.js"></script>
   <script type="text/javascript" src="src/controller.js"></script>
+  <title>Table manager</title>
 </head>
 
 <body>
@@ -41,62 +39,69 @@
     </fieldset>
   </form>
   </div>
-  <div class="Area_A">
-    <div id="seat-mapA">
-      <div class="booking-details">
-        <table>
-            <tr>
-              <td>Seat</td>
-              <td>For</td>
-              <td>User Online</td>
-            </tr>
-            <tr>
-              <td id="selected-seats_A"></td>
-              <td id="hover-seat_A"></td>
-              <td id="numOnline"></td>
-            </tr>
-        </table>
+  <div class="modal-body">
+    <div class="row">
+      <div class="Area_A">
+        <div id="seat-mapA">
+          <div class="booking-details">
+            <table>
+                <tr>
+                  <td>Seat</td>
+                  <td>For</td>
+                  <td>User Online</td>
+                </tr>
+                <tr>
+                  <td id="selected-seats_A"></td>
+                  <td id="hover-seat_A"></td>
+                  <td id="numOnline"></td>
+                </tr>
+            </table>
+          </div>
+          <div class="front">Area A</div>
+        </div>
       </div>
-      <div class="front">Area A</div>
     </div>
-  </div>
-  <div class="Area_B">
-    <div id="seat-mapB">
-      <div class="booking-details">
-        <table>
-            <tr>
-              <td>Seat</td>
-              <td>For</td>
-            </tr>
-            <tr>
-              <td id="selected-seats_B"></td>
-              <td id="hover-seat_B"></td>
-            </tr>
-        </table>
-      </div>
-      <div class="front">Area B</div>
+    <div class="row">
+      <div class="Area_B">
+        <div id="seat-mapB">
+          <div class="booking-details">
+            <table>
+                <tr>
+                  <td>Seat</td>
+                  <td>For</td>
+                </tr>
+                <tr>
+                  <td id="selected-seats_B"></td>
+                  <td id="hover-seat_B"></td>
+                </tr>
+            </table>
+          </div>
+          <div class="front">Area B</div>
 
-    </div>
-  </div>
-  <div class="Area_C">
-    <div id="seat-mapC">
-      <div class="booking-details">
-        <table>
-            <tr>
-              <td>Seat</td>
-              <td>For</td>
-            </tr>
-            <tr>
-              <td id="selected-seats_C"></td>
-              <td id="hover-seat_C"></td>
-            </tr>
-        </table>
+        </div>
       </div>
-      <div class="front">Terrace</div>
+    </div>
+    <div class="row">
+      <div class="Area_C">
+        <div id="seat-mapC">
+          <div class="booking-details">
+            <table>
+                <tr>
+                  <td>Seat</td>
+                  <td>For</td>
+                </tr>
+                <tr>
+                  <td id="selected-seats_C"></td>
+                  <td id="hover-seat_C"></td>
+                </tr>
+            </table>
+          </div>
+          <div class="front">Terrace</div>
+        </div>
+      </div>
     </div>
   </div>
-
-    <div style="clear:both"></div>
+  <div style="clear:both"></div>
 
 </body>
 
