@@ -240,8 +240,8 @@ $(document).ready(function() {
   $("#login-form").css("visibility","visible");
   dialog=$("#login-form").dialog({
     autoOpen: false,
-    height: 400,
-    width: 350,
+    height: 550,
+    width: 683,
     modal: true,
     buttons: {
       "Login": function() {
@@ -299,6 +299,7 @@ $(document).ready(function() {
       $online.text(number);
       });
   }
+  $('table').addClass('table');
   //sold seat
   //sc.get(['1_2', '4_4', '4_5', '6_6', '6_7', '8_5', '8_6', '8_7', '8_8', '10_1', '10_2']).status('unavailable');
 });
