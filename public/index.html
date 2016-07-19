@@ -21,85 +21,88 @@
 
 <body>
   <div id="login-form" title="Login" style="visibility:hidden">
-    <p id="validateTips">All form fields are required.</p>
-  <form>
-    <fieldset>
-      <table>
-      <tr>
-        <td><label for="account">帳號:</label></td>
-        <td><input type="text" name="account" id="account" class="text ui-widget-content ui-corner-all"></td>
-      </tr>
-      <tr>
-        <td><label for="passwd">密碼:</label></td>
-        <td> <input type="password" name="passwd" id="passwd" class="text ui-widget-content ui-corner-all"></td>
-      </tr>
-      </table>
-      <!-- Allow form submission with keyboard without duplicating the dialog button -->
-      <!-- <input type="submit" tabindex="-1" style="position:absolute; top:-1000px"> -->
-    </fieldset>
-  </form>
+      <p id="validateTips">All form fields are required.</p>
+      <form>
+         <fieldset>
+            <table>
+            <tr>
+              <td><label for="account">帳號:</label></td>
+              <td><input type="text" name="account" id="account" class="text ui-widget-content ui-corner-all"></td>
+            </tr>
+            <tr>
+              <td><label for="passwd">密碼:</label></td>
+              <td> <input type="password" name="passwd" id="passwd" class="text ui-widget-content ui-corner-all"></td>
+            </tr>
+            </table>
+            <!-- Allow form submission with keyboard without duplicating the dialog button -->
+            <!-- <input type="submit" tabindex="-1" style="position:absolute; top:-1000px"> -->
+         </fieldset>
+      </form>
   </div>
-  <div class="modal-body">
+  <div class="container-fluid">
     <div class="row">
-      <div class="Area_A">
-        <div id="seat-mapA">
-          <div class="booking-details">
-            <table>
-                <tr>
-                  <td>Seat</td>
-                  <td>For</td>
-                  <td>User Online</td>
-                </tr>
-                <tr>
-                  <td id="selected-seats_A"></td>
-                  <td id="hover-seat_A"></td>
-                  <td id="numOnline"></td>
-                </tr>
-            </table>
-          </div>
-          <div class="front">Area A</div>
-        </div>
+      <div class="col-xs-12 col-md-6">
+         <div class="Area_A">
+           <div id="seat-mapA">
+             <div class="booking-details">
+               <table>
+                   <tr>
+                     <td>Seat</td>
+                     <td>For</td>
+                     <td>User Online</td>
+                   </tr>
+                   <tr>
+                     <td id="selected-seats_A"></td>
+                     <td id="hover-seat_A"></td>
+                     <td id="numOnline"></td>
+                   </tr>
+               </table>
+             </div>
+             <div class="front">Area A</div>
+           </div>
+         </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="Area_B">
-        <div id="seat-mapB">
-          <div class="booking-details">
-            <table>
-                <tr>
-                  <td>Seat</td>
-                  <td>For</td>
-                </tr>
-                <tr>
-                  <td id="selected-seats_B"></td>
-                  <td id="hover-seat_B"></td>
-                </tr>
-            </table>
-          </div>
-          <div class="front">Area B</div>
+      <div class="col-xs-12 col-md-6">
+        <div class="Area_B">
+          <div id="seat-mapB">
+            <div class="booking-details">
+              <table>
+                  <tr>
+                    <td>Seat</td>
+                    <td>For</td>
+                  </tr>
+                  <tr>
+                    <td id="selected-seats_B"></td>
+                    <td id="hover-seat_B"></td>
+                  </tr>
+              </table>
+            </div>
+            <div class="front">Area B</div>
 
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="Area_C">
-        <div id="seat-mapC">
-          <div class="booking-details">
-            <table>
-                <tr>
-                  <td>Seat</td>
-                  <td>For</td>
-                </tr>
-                <tr>
-                  <td id="selected-seats_C"></td>
-                  <td id="hover-seat_C"></td>
-                </tr>
-            </table>
           </div>
-          <div class="front">Terrace</div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-6">
+        <div class="Area_C">
+          <div id="seat-mapC">
+            <div class="booking-details">
+              <table>
+                  <tr>
+                    <td>Seat</td>
+                    <td>For</td>
+                  </tr>
+                  <tr>
+                    <td id="selected-seats_C"></td>
+                    <td id="hover-seat_C"></td>
+                  </tr>
+              </table>
+            </div>
+            <div class="front">Terrace</div>
+          </div>
         </div>
       </div>
     </div>
+
   </div>
   <div style="clear:both"></div>
 
