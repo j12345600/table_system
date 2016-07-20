@@ -300,10 +300,25 @@ $(document).ready(function() {
       });
   }
   $('table').addClass('table');
+  $('.front').click(zoomInOrOut);
   //sold seat
   //sc.get(['1_2', '4_4', '4_5', '6_6', '6_7', '8_5', '8_6', '8_7', '8_8', '10_1', '10_2']).status('unavailable');
 });
-
+function zoomInOrOut(){
+  var $AB=$(".seatCharts-cell");
+  if($AB.height()>30){    //zoom out
+    $AB.css("height","25px");
+    $AB.css("width","50px");
+    $(".seatCharts-row").css("height","50px");
+    $(".front").css("width","300px");
+  }
+  else {                  //zoom in
+    $AB.css("height","50px");
+    $AB.css("width","100px");
+    $(".seatCharts-row").css("height","90px");
+    $(".front").css("width","600px");
+  }
+}
 
 function updateStatus(sc,status){
   if(status!=undefined){
