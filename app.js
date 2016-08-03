@@ -12,9 +12,9 @@ var fs 					 = require('fs');
 var jwt 				 = require('jsonwebtoken');
 var socketioJwt  = require('socketio-jwt');
 var mongojs 		 = require('mongojs');
-var db 					 = mongojs('restaurant_info')
+var db 					 = mongojs('restaurant_info',['user','map']);
 var randomstring = require("randomstring");
-var moment       = require("moment")
+var moment       = require("moment");
 moment.defaultFormat='YYYY-MM-DD HH:mm:ss';
 var secret=randomstring.generate(10);
 console.log(secret);
