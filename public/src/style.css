@@ -9,9 +9,9 @@
   padding: 3px;
   border-radius: 5px;
 }
-.booking-details {
+/*.booking-details {
   float: right;
-}
+}*/
 .booking-details table{
 
   text-align: center;
@@ -40,21 +40,6 @@ div.row{
 div.ui-dialog{
   font-size: 30px;
 }
-div.seatCharts-cell {
-  color: #182C4E;
-  height: 35px;
-  width: 40px;
-  line-height: 35px;
-  margin: 3px;
-  float: left;
-  text-align: center;
-  outline: none;
-  font-size: 15px;
-}
-div.Area_B  div.seatCharts-cell{
-  height: 100px;
-  width: 60px;
-}
 div.seatCharts-seat {
   color: #fff;
   cursor: pointer;
@@ -79,7 +64,7 @@ div.selected.seatCharts-seat {
   background-color: #E6CAC4;
 }
 div.seatCharts-seat.unavailable {
-  background-color: #472B34;
+  background-color: #F0F0F0;
   cursor: not-allowed;
 }
 div.seatCharts-container {

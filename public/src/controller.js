@@ -3,98 +3,90 @@ var total_seatB = 1;
 var total_seatC = 1;
 var price = 1; //price
 var dialog;
-var mapA=[
-'____bbbbbbb_f',
-'____bbbbbbb_f',
-'____bbbbbbb_f',
-'____bbbbbbb__',
-'_______ffff_f',
-'_____________',
-'_______ffff_f',
-'aaaa_________',
-'aaaa___d_dd_',
-'aaaa_f______d',
-'aaaa_f___dddd',
-'aaaa_f_d_dddd',
-'aaaa_f___dddd',
-];
+var mapA={};
 $(document).ready(function() {
   var $seats = [$('#selected-seats_A'),$('#selected-seats_B'),$('#selected-seats_C')]; //Sitting Area
   var $hover=[$('#hover-seat_A'),$('#hover-seat_B'),$('#hover-seat_C')];
   var $online=$('#numOnline');
-  var socket=undefined
-  var scA = $('#seat-mapA').seatCharts({
-    map: mapA,
-    naming: {
-      top: false,
-      // left:false,
-      getLabel: function(character, row, column) {
-        return (character.toUpperCase()+total_seatA++);
-      }
-    },
-    legend: { //Definition legend
-      node: $('#legend'),
-      items: [
-        ['a', 'available', 'Option'],
-        ['a', 'unavailable', 'Sold']
-      ]
-    },
-    focus  : function() {
-
-    if (this.status() == 'available') {
-        return 'focused';
-    }else if (this.status() == 'selected') { //sold
-      return this.style();
-    } else  {
-        //otherwise nothing changes
-        $hover[0].text("");
-        return this.style();
-    }
-    },
-    click: function() { //Click event
-      if (this.status() == 'available') { //optional seat
-        // $('<li>R' + (this.settings.row + 1) + ' S' + this.settings.label + '</li>')
-        //   .attr('id', 'cart-item-' + this.settings.id)
-        //   .data('seatId', this.settings.id)
-        //   .appendTo($cart);
-        //
-        // $counter.text(sc.find('selected').length + 1);
-         $seats[0].text(recalculateTotal(scA)-1);
-         scA.get(this.settings.id).status('selected');
-         if(socket){
-           socket.emit('recv_updateA', {status:{
-             unavailable:scA.find('unavailable').seatIds,
-             available:scA.find('available').seatIds,
-             selected:scA.find('selected').seatIds
-           }});
-         }
-        return 'selected';
-      } else if (this.status() == 'selected') { //Checked
-        // //Update Number
-        // $counter.text(sc.find('selected').length - 1);
-        // //update totalnum
-        scA.get(this.settings.id).status('available');
-        if(socket){
-          socket.emit('recv_updateA', {status:{
-            unavailable:scA.find('unavailable').seatIds,
-            available:scA.find('available').seatIds,
-            selected:scA.find('selected').seatIds
-          }});
+  var socket=undefined;
+  var scA = null;
+  $.get('/api/map').done(function(result){
+    mapA=result;
+    //set up map
+    scA=$('#seat-mapA').seatCharts({
+      map: mapA.map,
+      naming: {
+        top: false,
+        // left:false,
+        getLabel: function(character, row, column) {
+          return (character.toUpperCase()+mapA.tid[row-1][column-1]+"/"+mapA.for[row-1][column-1]);
         }
+      },
+      legend: { //Definition legend
+        node: $('#legend'),
+        items: [
+          ['a', 'available', 'Option'],
+          ['a', 'unavailable', 'Sold']
+        ]
+      },
+      focus  : function() {
 
-        $seats[0].text(recalculateTotal(scA)+1);
-        //
-        // //Delete reservation
-        // $('#cart-item-' + this.settings.id).remove();
-        //optional
-        return 'available';
-      } else if (this.status() == 'unavailable') { //sold
-        return 'unavailable';
-      } else {
+      if (this.status() == 'available') {
+          return 'focused';
+      }else if (this.status() == 'selected') { //sold
         return this.style();
+      } else  {
+          //otherwise nothing changes
+          $hover[0].text("");
+          return this.style();
       }
-    }
+      },
+      click: function() { //Click event
+        if (this.status() == 'available') { //optional seat
+          // $('<li>R' + (this.settings.row + 1) + ' S' + this.settings.label + '</li>')
+          //   .attr('id', 'cart-item-' + this.settings.id)
+          //   .data('seatId', this.settings.id)
+          //   .appendTo($cart);
+          //
+          // $counter.text(sc.find('selected').length + 1);
+           $seats[0].text(recalculateTotal(scA)-1);
+           scA.get(this.settings.id).status('selected');
+           if(socket){
+             socket.emit('recv_updateA', {status:{
+               unavailable:[],
+               available:scA.find('available').seatIds,
+               selected:scA.find('selected').seatIds
+             }});
+           }
+          return 'selected';
+        } else if (this.status() == 'selected') { //Checked
+          // //Update Number
+          // $counter.text(sc.find('selected').length - 1);
+          // //update totalnum
+          scA.get(this.settings.id).status('available');
+          if(socket){
+            socket.emit('recv_updateA', {status:{
+              unavailable:[],
+              available:scA.find('available').seatIds,
+              selected:scA.find('selected').seatIds
+            }});
+          }
+
+          $seats[0].text(recalculateTotal(scA)+1);
+          //
+          // //Delete reservation
+          // $('#cart-item-' + this.settings.id).remove();
+          //optional
+          return 'available';
+        } else if (this.status() == 'unavailable') { //sold
+          return 'unavailable';
+        } else {
+          return this.style();
+        }
+      }
+    });
   });
+
 
   $("#login-form").css("visibility","visible");
   dialog=$("#login-form").dialog({
@@ -163,6 +155,9 @@ $(document).ready(function() {
     socket.on('updateOnline',function(number){
       $online.text(number);
       });
+    socket.on('updateMap',function(){
+        location.reload();
+    });
   }
   $('table').addClass('table');
   $(".but_login").click(function(){
@@ -177,8 +172,6 @@ $(document).ready(function() {
   //sold seat
   //sc.get(['1_2', '4_4', '4_5', '6_6', '6_7', '8_5', '8_6', '8_7', '8_8', '10_1', '10_2']).status('unavailable');
 });
-
-
 function updateStatus(sc,status){
   if(status!=undefined){
     sc.get(status.status.unavailable).status('unavailable');

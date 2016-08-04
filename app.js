@@ -8,7 +8,6 @@ var helmet 			 = require('helmet');
 var session 		 = require('express-session');
 var bodyParser	 = require('body-parser');
 var fs 					 = require('fs');
-// var secret			= require('./secret.js')
 var jwt 				 = require('jsonwebtoken');
 var socketioJwt  = require('socketio-jwt');
 var mongojs 		 = require('mongojs');
@@ -18,7 +17,12 @@ var moment       = require("moment");
 moment.defaultFormat='YYYY-MM-DD HH:mm:ss';
 var secret=randomstring.generate(10);
 console.log(secret);
-var condA,condB,condC;
+var condA={status:{
+  unavailable:[],
+  available:[],
+  selected:[]
+  }
+};
 var numOnline=0;
 var expireInMinute=72*60;
 
@@ -36,6 +40,17 @@ app.use(session({
  resave: true,
  saveUninitialized: true
 }));
+app.get('/api/map',function(req,res){
+  db.map.find({},function(err,docs){
+    if(err){
+      console.log(err);
+    }
+    else if(docs[0]!=undefined){
+      res.type("json");
+  		res.json(docs[0]);
+    }
+  });
+});
 app.get('/api/logout',function(req,res,next){
   req.session=null;
   res.cookie("connect.sid",'', { maxAge: -1, httpOnly: true });
@@ -117,8 +132,9 @@ io.on('connection', function(socket){
 	});
 	socket.on("recv_updateA", function(msg){
     console.log(socket.decoded_token.account,"\tupdates at ",moment().format());
-    io.emit('updateA',msg);
-		condA=msg;
+    condA.status.available=msg.status.available;
+    condA.status.selected=msg.status.selected;
+    io.emit('updateA',condA);
   });
 	socket.on('new_connt',function(msg){
 		numOnline++;
@@ -127,21 +143,28 @@ io.on('connection', function(socket){
 		// socket.emit('updateC',condC);
 		io.emit('updateOnline',io.engine.clientsCount);
 	});
-  socket.on('unavailable',function(){
+  socket.on('unavailable',function(msg){
     if(socket.decoded_token.admin=="true"){
-
+      io.emit('updateA',msg);
+  		condA=msg;
     }
   });
-  socket.on('mapUpdate',function(){
+  socket.on('mapUpdate',function(map){
     if(socket.decoded_token.admin=="true"){
-
+      // console.log(map);
+      db.map.findAndModify({
+        query: {},
+        update: { $set: {tid:map.tid,for:map.for,map:map.map,modified:moment().format()} },
+        new: true
+        }, function (err, doc, lastErrorObject) {
+          console.log(err);
+        });
+      io.emit('updateMap');
     }
   });
 	socket.on('reset',function(msg){
     if(socket.decoded_token.admin=="true"){
       condA={};
-      condB={};
-      condC={};
     }
 	});
 });

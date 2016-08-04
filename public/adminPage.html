@@ -6,12 +6,25 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script type="text/javascript" src="src/jquery.seat-charts.min.js"></script>
   <!-- bootstrap -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="src/bootstrap.min.css">
+  <link rel="stylesheet" href="src/bootstrap-theme.min.css">
+  <script src="src/bootstrap.min.js"></script>
 
   <script type="text/javascript" src="src/rollups/sha256.js"></script>
   <style type="text/css"></style>
+  <style media="screen">
+    div.seatCharts-cell {
+      color: #182C4E;
+      height: 35px;
+      width: 40px;
+      line-height: 35px;
+      margin: 3px;
+      float: left;
+      text-align: center;
+      outline: none;
+      font-size: 13px;
+    }
+  </style>
   <link href="src/style.css" rel="stylesheet" type="text/css" />
   <link href="src/jquery-ui.min.css" rel="stylesheet" type="text/css" />
   <script src="/socket.io/socket.io.js"></script>
@@ -41,37 +54,79 @@
          </fieldset>
       </form>
   </div>
-  <!-- Right-hand-side info bar -->
-  <div class="booking-details">
-    <table>
-        <tr>
-          <td>Table</td>
-          <td>For</td>
-          <td>User Online</td>
-        </tr>
-        <tr>
-          <td id="selected-seats_A"></td>
-          <td id="hover-seat_A"></td>
-          <td id="numOnline"></td>
-        </tr>
-        <tr>
-          <td>
-            <button class="but_login btn btn-info btn-block" type="button" name="button">登入</button>
-          </td>
-        </tr>
-    </table>
-  </div>
-  <!-- Table grid -->
   <div class="container-fluid">
     <div class="row">
-      <div class="col-xs-12 col-md-12 ">
+      <div class="col-xs-9 col-md-9 ">
+        <!-- Table grid -->
          <div class="Area_A">
            <div id="seat-mapA">
              <div class="front">前端</div>
            </div>
          </div>
       </div>
+      <!-- Right-hand-side info bar -->
+      <div class="col-xs-3 col-md-3">
+        <div class="booking-details">
+          <table class="table-condensed">
+            <thead>
+              <tr>
+                <td>Table</td>
+                <td>For</td>
+                <td>User Online</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td id="selected-seats_A"></td>
+                <td id="hover-seat_A"></td>
+                <td id="numOnline"></td>
+              </tr>
+              <tr >
+                <td colspan="3"><button class="but_login btn btn-info btn-block" type="button" name="button">
+                    登入
+                </button></td>
+              </tr>
+              <!-- manage unavailable -->
+              <tr><td colspan="3">Modify Unavil Stat</td></tr>
+              <tr>
+                <td colspan="3">
+                <button class="but_unavil btn btn-warning btn-block disabled" type="button" name="button" onclick="but_unvail_onclick()">修改</button>
+              </td>
+            </tr>
+            <!-- manage map detail -->
+            <tr><td colspan="3">Modify Map info</td></tr>
+            <tr>
+              <td colspan="3">
+              <button class="but_map_info btn btn-warning btn-block disabled" type="button" name="button" onclick="but_map_info_onclick()">修改</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                字母:
+              </td>
+              <td>
+                <input class="input-sm input-char" type="text" value="B" maxlength="1" disabled>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                桌號:
+              </td>
+              <td>
+                <input class="input-sm input-num" type="text" value="B" maxlength="3" disabled>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                桌數:
+              </td>
+              <td>
+                <input class="input-sm input-count" type="text" value="B" maxlength="1" disabled>
+              </td>
+            </tr>
 
+            </tbody>
+          </table>
   <div style="clear:both"></div>
 
 </body>
