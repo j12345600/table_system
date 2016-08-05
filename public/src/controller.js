@@ -10,6 +10,9 @@ $(document).ready(function() {
   var $online=$('#numOnline');
   var socket=undefined;
   var scA = null;
+  function hash(pass){
+    return CryptoJS.SHA256(pass).toString();
+  }
   $.get('/api/map').done(function(result){
     mapA=result;
     //set up map
@@ -98,7 +101,7 @@ $(document).ready(function() {
       "Login": function() {
         $.post('/api/login', {
           account: $('#account').val(),
-          passwd: $('#passwd').val()
+          passwd: hash($('#passwd').val())
         }).done(function (result) {
           if(result.success!='false'){
             connect_socket(result.token);
@@ -114,7 +117,7 @@ $(document).ready(function() {
     event.preventDefault();
     $.post('/api/login', {
       account: $('#account').val(),
-      passwd: $('#passwd').val()
+      passwd: hash($('#passwd').val())
     }).done(function (result) {
       if(result.success!='false'){
         connect_socket(result.token);

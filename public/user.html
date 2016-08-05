@@ -1,0 +1,61 @@
+<!DOCTYPE>
+<html ng-app="myApp">
+<head>
+  <meta charset="UTF-8">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+  <script type="text/javascript" src="src/rollups/sha256.js"></script>
+  <title>User Editing</title>
+</head>
+<body>
+  <div class="container" ng-controller="AppCtrl">
+    <h1>Contact List App</h1>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Password</th>
+          <th >Admin</th>
+          <th>Action</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input class="form-control" ng-model="contact.username"></td>
+          <td><input class="form-control" ng-model="contact.pass"></td>
+          <td colspan="2"><select class="form-control" ng-model="contact.admin">
+            <option>false</option>
+            <option>true</option>
+          </select></td>
+          <td><button class="btn btn-primary" ng-click="addContact()">Add Contact</button></td>
+          <td><button class="btn btn-info" ng-click="update()">Update</button>&nbsp;&nbsp;<button class="btn btn-info" ng-click="deselect()">Clear</button></td>
+        </tr>
+        <tr ng-repeat="contact in contactlist">
+          <td>{{contact.username}}</td>
+          <td>{{contact.pass}}</td>
+          <td>{{contact.admin}}</td>
+          <td><button class="btn btn-danger" ng-click="remove(contact._id)">Remove</button></td>
+          <td><button class="btn btn-warning" ng-click="edit(contact._id)">Edit</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="input-group">
+      <span class="input-group-addon" id="basic-addon1">@</span>
+      <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" ng-model="loginf.account">
+    </div>
+    <br>
+    <div class="input-group">
+      <input type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon2" ng-model="loginf.passwd">
+      <span class="input-group-addon" id="basic-addon2"></span>
+    </div>
+    <button class="btn btn-warning" ng-click="login()">登入</button>
+  </div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+<script src="controllers/controller.js"></script>
+</body>
+</html>
