@@ -20,7 +20,7 @@ $(document).ready(function() {
       map: mapA.map,
       naming: {
         top: false,
-        // left:false,
+         left:false,
         getLabel: function(character, row, column) {
           return (character.toUpperCase()+mapA.tid[row-1][column-1]+"/"+mapA.for[row-1][column-1]);
         }
