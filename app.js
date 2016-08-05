@@ -106,7 +106,6 @@ db.user.find({username:"edison"},function (err, docs) {
   root_id=docs[0]._id;
 });
 app.get('/userlist', function (req, res) {
-  console.log(req.session);
   if(req.session.admin=="true"){
     db.user.find(function (err, docs) {
       res.json(docs);
@@ -136,7 +135,7 @@ app.delete('/userlist/:id', function (req, res) {
         res.json(doc);
       });
     }
-    res.json({stat:"fail"});
+    else res.json({stat:"fail"});
   }
   else{
     res.send(fail);
@@ -146,7 +145,6 @@ app.delete('/userlist/:id', function (req, res) {
 app.get('/userlist/:id', function (req, res) {
   if(req.session.admin==="true"){
     var id = req.params.id;
-    console.log(id);
     db.user.findOne({_id: mongojs.ObjectId(id)}, function (err, doc) {
       res.json(doc);
     });
@@ -167,8 +165,8 @@ app.put('/userlist/:id', function (req, res) {
           res.json(doc);
         }
       );
-      res.json({stat:"fail"});
     }
+    else res.json({stat:"fail"});
   }
   else{
     res.send(fail);
