@@ -103,12 +103,17 @@ span.seatCharts-legendDescription {
   font-size: 14px;
   cursor: pointer
 }
+div.Area_A{
+background-image:url('/src/images/map.png');
+background-repeat:no-repeat;
+}
+
 /*#selected-seats {
   max-height: 150px;
   overflow-y: auto;
   overflow-x: none;
   width: 200px;
-}*/
+*/
 /*#selected-seats li {
   float: left;
   width: 72px;
